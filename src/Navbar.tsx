@@ -1,29 +1,17 @@
-import { useAtom } from "jotai";
 import { useState } from "react";
-import startBinarySearch from "./algorithms/binarySearch";
-import {
-  array,
-  endAtom,
-  middleAtom,
-  resultAtom,
-  searchItemAtom,
-  startAtom,
-} from "./Visualizer";
+import { useDispatch } from "react-redux";
+import binarySearch from "./algorithms/binarySearch";
+import { array } from "./Visualizer";
 
 export default function Navbar() {
   const [searchItem, setSearchItem] = useState(0);
+  const dispatch = useDispatch();
 
   const handleClick = () => {
-    startBinarySearch({
+    binarySearch({
       array,
-      start,
-      setStart,
-      end,
-      setEnd,
-      middle,
-      setMiddle,
       searchItem,
-      setResult,
+      dispatch,
     });
   };
 
@@ -36,11 +24,13 @@ export default function Navbar() {
 
         <button
           onClick={handleClick}
-          className="rounded-md bg-blue-700 px-4 text-white py-2 mx-4 hover:bg-blue-600">
+          className="rounded-md bg-blue-700 px-4 text-white py-2 mx-4 hover:bg-blue-600"
+        >
           binary search
         </button>
 
         <input
+          type={"number"}
           value={searchItem}
           onChange={(e) => setSearchItem(Number(e.target.value))}
         />

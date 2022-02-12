@@ -2,3 +2,81 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.element {
+  position: relative;
+  transition: background-color 0.5s ease-out;
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
+}
+
+.tooltip {
+  position: absolute;
+  bottom: 125%;
+  font-size: smaller;
+  width: fit-content;
+  height: fit-content;
+  white-space: nowrap;
+  color: #eee;
+  text-align: center;
+  padding: 2px 5px;
+  border-radius: 6px;
+  z-index: 1;
+  font-weight: 500;
+}
+
+.tooltip-boundary {
+  bottom: 0;
+  top: 125%;
+  @apply bg-red-600;
+}
+
+.tooltip-boundary:after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent;
+  @apply border-b-red-600;
+}
+
+.tooltip-middle {
+  @apply bg-blue-700;
+}
+
+.tooltip-middle:after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent;
+  @apply border-t-blue-700;
+}
+
+.tooltip-result {
+  @apply bg-green-600;
+}
+
+.tooltip-result:after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: transparent;
+  @apply border-t-green-600;
+}
+
+.tooltip-invisible {
+  visibility: hidden;
+  display: none;
+}

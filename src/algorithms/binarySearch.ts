@@ -1,71 +1,59 @@
-type StartBinarySearchParams = {
+import {
+  setEnd,
+  setMiddle,
+  setResult,
+  setStart,
+} from "../redux/binarySearchReducer";
+
+type BinarySearchParams = {
   array: number[];
-  start: number;
-  setStart: any;
-  end: number;
-  setEnd: any;
-  middle: number;
-  setMiddle: any;
   searchItem: any;
-  setResult: any;
+  dispatch: any;
 };
 
-const wait = async () => {
-  return new Promise<void>((res) => setTimeout(res, 5000));
+const wait = async (s: number) => {
+  return new Promise<void>((res) => setTimeout(res, s * 1000));
 };
 
-const getMiddle = (start: number, end: number) => {
+export const getMiddle = (start: number, end: number) => {
   return Math.floor((start + end) / 2);
 };
 
-export default async function startBinarySearch({
+export default async function binarySearch({
   array,
-  start,
-  setStart,
-  end,
-  setEnd,
-  middle,
-  setMiddle,
   searchItem,
-  setResult,
-}: StartBinarySearchParams) {
-  console.log("binary search start");
+  dispatch,
+}: BinarySearchParams) {
+  let start = 0,
+    end = array.length - 1;
 
-  for (; start <= end; ) {
-    //   while (start <= end) {
-    let middle = getMiddle(start, end);
-    setMiddle(getMiddle(start, end));
-    await wait();
+  dispatch(setStart(start));
+  dispatch(setEnd(end));
+  dispatch(setResult(null));
+
+  while (start <= end) {
+    const middle = Math.floor((start + end) / 2);
+
+    dispatch(setMiddle(middle));
+    await wait(0.9);
 
     const guess = array[middle];
-    console.log(
-      `current guess=${guess} middle=${middle} start=${start} end=${end}`
-    );
 
     if (guess === searchItem) {
-      setResult(middle);
-      await wait();
-      console.log(`result found. middle=${middle} start=${start} end=${end}`);
-      return;
+      dispatch(setResult(middle));
+      return middle;
     }
 
     if (guess < searchItem) {
-      setStart(middle + 1);
-      await wait();
-      console.log(
-        `removed left half, middle=${middle} start=${start} end=${end}`
-      );
+      start = middle + 1;
+
+      dispatch(setStart(middle + 1));
     } else {
-      setEnd(middle - 1);
-      await wait();
-      console.log(
-        `removed right half, middle=${middle} start=${start} end=${end}`
-      );
-      setMiddle();
+      end = middle - 1;
+
+      dispatch(setEnd(middle - 1));
     }
-    // })();
   }
 
-  console.log("not found");
   return null;
 }
